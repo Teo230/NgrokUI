@@ -12,6 +12,7 @@ using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace NgrokUI
@@ -45,6 +46,7 @@ namespace NgrokUI
                 {
                     _protocol = value;
                     NotifyPropertyChanged(nameof(Protocol));
+                    NotifyPropertyChanged(nameof(ConfirmEnable));
                 }
             }
         }
@@ -59,6 +61,7 @@ namespace NgrokUI
                 {
                     _portNumber = value;
                     NotifyPropertyChanged(nameof(PortNumber));
+                    NotifyPropertyChanged(nameof(ConfirmEnable));
                 }
             }
         }
@@ -76,6 +79,22 @@ namespace NgrokUI
                 }
             }
         }
+
+        public bool ConfirmEnable => PortNumber > 0 && !string.IsNullOrWhiteSpace(Protocol);
+
+        private int _waitSeconds = 3;
+        public int WaitSeconds
+        {
+            get => _waitSeconds;
+            set
+            {
+                if (_waitSeconds != value)
+                {
+                    _waitSeconds = value;
+                    NotifyPropertyChanged(nameof(WaitSeconds));
+                }
+            }
+        }
         #endregion
 
         #region Ctr
@@ -84,6 +103,7 @@ namespace NgrokUI
             Initialize();
             _mainWindowModel = new MainWindowModel();
             _mainWindowModel.elaborationCompleted += ModelElaboration;
+            NotifyPropertyChanged(nameof(ConfirmEnable));
         }
         #endregion
 
@@ -149,19 +169,12 @@ namespace NgrokUI
                 {
                     this._confirm = new RelayCommands(obj =>
                     {
+                        Process ngrok = new Process();
+                        ngrok.StartInfo.FileName = "ngrok.exe";
+                        ngrok.StartInfo.Arguments = $"{Protocol} {PortNumber}";
+                        ngrok.Start();
 
-                        using (var process = new Process())
-                        {
-                            //process.StartInfo.FileName = @"cmd.exe";
-                            //process.StartInfo.Arguments = @"/c ngrok.exe";
-                            //process.StartInfo.UseShellExecute = false;
-                            //process.StartInfo.RedirectStandardInput = true;
-                            //process.StartInfo.Verb = "runas";
-                            //process.StartInfo.WindowStyle
-
-                            //process.Start();
-                        }
-
+                        System.Threading.Thread.Sleep(WaitSeconds * 1000);
                         //_mainWindowModel.StartTunnel(GetProtocol(), PortNumber);
                         _mainWindowModel.GetTunnels();
                     }, obj => true);

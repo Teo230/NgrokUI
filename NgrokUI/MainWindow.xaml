@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:NgrokUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="NgrokUI"
-    Width="500"
+    Width="450"
     Height="450"
     Background="#242424"
     mc:Ignorable="d">
@@ -31,7 +31,7 @@
 
             <Grid Grid.Row="0" Grid.Column="0">
                 <TextBox
-                    Margin="50,0,0,0"
+                    Margin="10,0,0,0"
                     VerticalAlignment="Center"
                     Background="Transparent"
                     BorderBrush="Transparent"
@@ -46,7 +46,7 @@
 
             <Grid Grid.Row="1" Grid.Column="0">
                 <TextBox
-                    Margin="50,0,0,0"
+                    Margin="10,0,0,0"
                     VerticalAlignment="Center"
                     Background="Transparent"
                     BorderBrush="Transparent"
@@ -61,7 +61,7 @@
 
             <Grid Grid.Row="2" Grid.Column="0">
                 <TextBox
-                    Margin="50,0,0,0"
+                    Margin="10,0,0,0"
                     VerticalAlignment="Center"
                     Background="Transparent"
                     BorderBrush="Transparent"
@@ -70,7 +70,7 @@
                     FontSize="20"
                     Foreground="White"
                     IsReadOnly="True"
-                    Text="TTL"
+                    Text="Wait before execute"
                     TextAlignment="Left" />
             </Grid>
 
@@ -82,14 +82,14 @@
                     FontWeight="SemiBold"
                     HorizontalAlignment="Right"
                     MinWidth="100"
-                    Margin="0,0,50,0"
+                    Margin="0,0,10,0"
                     ItemsSource="{Binding Protocols}"
                     SelectedItem="{Binding Protocol, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="1">
                 <TextBox
-                    Margin="0,0,50,0"
+                    Margin="0,0,10,0"
                     VerticalAlignment="Center"
                     FontFamily="Verdana"
                     FontSize="20"
@@ -102,7 +102,7 @@
 
             <Grid Grid.Row="2" Grid.Column="1">
                 <TextBox
-                    Margin="0,0,50,0"
+                    Margin="0,0,10,0"
                     VerticalAlignment="Center"
                     FontFamily="Verdana"
                     FontSize="20"
@@ -115,7 +115,7 @@
 
             <Grid Grid.Row="3" Grid.ColumnSpan="2">
                 <Button
-                    Margin="50,10,50,10"
+                    Margin="10"
                     Padding="10"
                     VerticalAlignment="Center"
                     Background="#141414"

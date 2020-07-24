@@ -21,6 +21,8 @@ namespace NgrokUI
     {
         #region Prop
         private MainWindowModel _mainWindowModel;
+        public static Process ngrok = new Process();
+
 
         private ObservableCollection<string> _protocols = new ObservableCollection<string>();
         public ObservableCollection<string> Protocols
@@ -36,7 +38,7 @@ namespace NgrokUI
             }
         }
 
-        private string _protocol;
+        private string _protocol = "http";
         public string Protocol
         {
             get => _protocol;
@@ -51,7 +53,7 @@ namespace NgrokUI
             }
         }
 
-        private int _portNumber;
+        private int _portNumber = 80;
         public int PortNumber
         {
             get => _portNumber;
@@ -169,9 +171,9 @@ namespace NgrokUI
                 {
                     this._confirm = new RelayCommands(obj =>
                     {
-                        Process ngrok = new Process();
                         ngrok.StartInfo.FileName = "ngrok.exe";
                         ngrok.StartInfo.Arguments = $"{Protocol} {PortNumber}";
+                        ngrok.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                         ngrok.Start();
 
                         System.Threading.Thread.Sleep(WaitSeconds * 1000);

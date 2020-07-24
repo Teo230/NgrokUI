@@ -13,5 +13,19 @@ namespace NgrokUI
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+
+        }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            try
+            {
+                MainWindowViewModel.ngrok.Close();
+                System.Windows.Application.Current.Shutdown();
+            }
+            catch(Exception exc) { }
+        }
     }
 }

@@ -21,8 +21,7 @@ namespace NgrokUI
     {
         #region Prop
         private MainWindowModel _mainWindowModel;
-        public static Process ngrok = new Process();
-
+        public static Process ngrok;
 
         private ObservableCollection<string> _protocols = new ObservableCollection<string>();
         public ObservableCollection<string> Protocols
@@ -155,7 +154,8 @@ namespace NgrokUI
             {
                 if (e.TunnelReceived.Value)
                 {
-                    ConsoleOutput = _mainWindowModel.TunnelResult.tunnels.FirstOrDefault().public_url;
+                    var tunnels = _mainWindowModel.TunnelResult.tunnels;
+                    ConsoleOutput = $"{tunnels.FirstOrDefault().public_url}\n{tunnels.Last().public_url}";
                 }
             }
         }
@@ -171,6 +171,13 @@ namespace NgrokUI
                 {
                     this._confirm = new RelayCommands(obj =>
                     {
+                        try
+                        {
+                            ngrok.Kill();
+                        }
+                        catch (Exception exc) { }
+
+                        ngrok = new Process();
                         ngrok.StartInfo.FileName = "ngrok.exe";
                         ngrok.StartInfo.Arguments = $"{Protocol} {PortNumber}";
                         ngrok.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;

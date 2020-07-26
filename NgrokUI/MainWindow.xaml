@@ -9,28 +9,66 @@
     Width="450"
     Height="450"
     Background="#242424"
+    ResizeMode="NoResize"
     mc:Ignorable="d">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1.5*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="auto" />
-            </Grid.RowDefinitions>
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style TargetType="TabItem" x:Key="TabStyle">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TabItem">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                            <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Transparent" Margin="2,0">
+                                <ContentPresenter x:Name="ContentSite"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    ContentSource="Header"
+                                    Margin="10,2"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="#242424" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="False">
+                                    <Setter TargetName="Border" Property="Background" Value="#141414" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <TabControl
+        BorderBrush="Transparent"
+        BorderThickness="0"
+        Background="Transparent">
+        <TabItem Name="home"
+                 Header="Home"
+                 Style="{StaticResource TabStyle}">
+            <Grid Background="#242424">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.5*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Grid.Column="0">
-                <TextBox
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Row="0" Grid.Column="0">
+                        <TextBox
                     Margin="10,0,0,0"
                     VerticalAlignment="Center"
                     Background="Transparent"
@@ -42,10 +80,10 @@
                     IsReadOnly="True"
                     Text="Protocol"
                     TextAlignment="Left" />
-            </Grid>
+                    </Grid>
 
-            <Grid Grid.Row="1" Grid.Column="0">
-                <TextBox
+                    <Grid Grid.Row="1" Grid.Column="0">
+                        <TextBox
                     Margin="10,0,0,0"
                     VerticalAlignment="Center"
                     Background="Transparent"
@@ -57,64 +95,41 @@
                     IsReadOnly="True"
                     Text="Port Number"
                     TextAlignment="Left" />
-            </Grid>
+                    </Grid>
 
-            <Grid Grid.Row="2" Grid.Column="0">
-                <TextBox
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Center"
-                    Background="Transparent"
-                    BorderBrush="Transparent"
-                    BorderThickness="0"
-                    FontFamily="Verdana"
-                    FontSize="20"
-                    Foreground="White"
-                    IsReadOnly="True"
-                    Text="Wait before execute"
-                    TextAlignment="Left" />
-            </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <ComboBox
+                        Height="30"
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        HorizontalAlignment="Right"
+                        MinWidth="100"
+                        Margin="0,0,10,0"
+                        ItemsSource="{Binding Protocols}"
+                        SelectedItem="{Binding Protocol, UpdateSourceTrigger=PropertyChanged}">
+                        </ComboBox>
+                    </Grid>
 
-            <Grid Grid.Row="0" Grid.Column="1">
-                <ComboBox
-                    Height="30"
-                    VerticalAlignment="Center"
-                    FontSize="16"
-                    FontWeight="SemiBold"
-                    HorizontalAlignment="Right"
-                    MinWidth="100"
-                    Margin="0,0,10,0"
-                    ItemsSource="{Binding Protocols}"
-                    SelectedItem="{Binding Protocol, UpdateSourceTrigger=PropertyChanged}" />
-            </Grid>
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <TextBox
+                        Margin="0,0,10,0"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderBrush="Black"
+                        BorderThickness="0 0 0 1"
+                        FontFamily="Verdana"
+                        FontSize="20"
+                        HorizontalAlignment="Right"
+                        MinWidth="100"
+                        Foreground="White"
+                        PreviewTextInput="TextBox_PreviewTextInput"
+                        Text="{Binding PortNumber, UpdateSourceTrigger=PropertyChanged}"
+                        TextAlignment="Right" />
+                    </Grid>
 
-            <Grid Grid.Row="1" Grid.Column="1">
-                <TextBox
-                    Margin="0,0,10,0"
-                    VerticalAlignment="Center"
-                    FontFamily="Verdana"
-                    FontSize="20"
-                    HorizontalAlignment="Right"
-                    MinWidth="100"
-                    PreviewTextInput="TextBox_PreviewTextInput"
-                    Text="{Binding PortNumber, UpdateSourceTrigger=PropertyChanged}"
-                    TextAlignment="Right" />
-            </Grid>
-
-            <Grid Grid.Row="2" Grid.Column="1">
-                <TextBox
-                    Margin="0,0,10,0"
-                    VerticalAlignment="Center"
-                    FontFamily="Verdana"
-                    FontSize="20"
-                    HorizontalAlignment="Right"
-                    MinWidth="100"
-                    PreviewTextInput="TextBox_PreviewTextInput"
-                    Text="{Binding WaitSeconds, UpdateSourceTrigger=PropertyChanged}"
-                    TextAlignment="Right" />
-            </Grid>
-
-            <Grid Grid.Row="3" Grid.ColumnSpan="2">
-                <Button
+                    <Grid Grid.Row="3" Grid.ColumnSpan="2">
+                        <Button
                     Margin="10"
                     Padding="10"
                     VerticalAlignment="Center"
@@ -126,11 +141,11 @@
                     Cursor="Hand"
                     FontSize="20"
                     Foreground="White" />
-            </Grid>
-        </Grid>
+                    </Grid>
+                </Grid>
 
-        <Grid Grid.Row="1">
-            <TextBox
+                <Grid Grid.Row="1">
+                    <TextBox
                 Width="auto"
                 Height="auto"
                 Margin="10"
@@ -141,6 +156,49 @@
                 Foreground="White"
                 IsReadOnly="True"
                 Text="{Binding ConsoleOutput}"/>
-        </Grid>
-    </Grid>
+                </Grid>
+            </Grid>
+        </TabItem>
+
+        <TabItem
+            Header="Settings"
+            Name="settings"
+            Style="{StaticResource TabStyle}">
+
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left">
+                <TextBox
+                    Margin="0,10,0,0"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    FontFamily="Verdana"
+                    FontSize="15"
+                    Foreground="White"
+                    IsReadOnly="True"
+                    Text="Wait before execute"
+                    TextAlignment="Left" />
+
+                <TextBox
+                    Margin="10,10,0,0"
+                    VerticalAlignment="Center"
+                    FontFamily="Verdana"
+                    FontSize="15"
+                    HorizontalAlignment="Right"
+                    Width="auto"
+                    MinWidth="10"
+                    Background="Transparent"
+                    BorderBrush="Black"
+                    BorderThickness="0 0 0 1"
+                    Foreground="White"
+                    PreviewTextInput="TextBox_PreviewTextInput"
+                    Text="{Binding WaitSeconds, UpdateSourceTrigger=PropertyChanged}"
+                    TextAlignment="Right" />
+
+            </StackPanel>
+        </TabItem>
+
+    </TabControl>
 </Window>

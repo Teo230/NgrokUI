@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,8 +23,8 @@ namespace NgrokUI
         {
             try
             {
-                MainWindowViewModel.ngrok.Close();
-                System.Windows.Application.Current.Shutdown();
+                MainWindowViewModel.ngrok.Kill();
+                Current.Shutdown();
             }
             catch(Exception exc) { }
         }
